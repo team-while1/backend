@@ -5,7 +5,7 @@
 | **Java**        | 17                                             |
 | **JDK**         | Openjdk 17.0.13                                |
 | **Type**        | Gradle - Groovy                                |
-| **Spring Boot** | 3.4.1                                          |
+| **Spring Boot** | 3.4.3                                          |
 | - Dependencies| Lombok, Spring Web, MariaDB Driver, Spring Data JPA |
 | **MariaDB**     | 11.6.2                                         |
 | **N\A**         | N\A                                            |
