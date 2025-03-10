@@ -1,3 +1,15 @@
+### 추가 by 김민우 ###
+**/.env
+**/*.pem
+**/*.key
+**/*.crt
+**/*log*
+**/.DS_Store
+**/Thumbs.db
+**/out/
+**/build/
+**/target/
+
 HELP.md
 .gradle
 build/
