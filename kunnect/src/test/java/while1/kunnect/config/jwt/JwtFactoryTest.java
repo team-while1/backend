@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import while1.kunnect.domain.College;
-import while1.kunnect.domain.Major;
+import while1.kunnect.domain.enumtype.College;
+import while1.kunnect.domain.enumtype.Major;
 import while1.kunnect.domain.Member;
 import while1.kunnect.repository.MemberRepository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JwtFactoryTest {
@@ -32,11 +31,11 @@ class JwtFactoryTest {
         // given
         Member testMember = memberRepository.save(Member.builder()
                 .email("test@example.com")
-                .password("test")
+                .password("1233")
                 .major(Major.TEST1)
                 .college(College.TEST1)
                 .studentNum(1231L)
-                .name("test")
+                .name("test1")
                 .build());
         // when
         String token = tokenProvider.generateToken(testMember, Duration.ofDays(14));

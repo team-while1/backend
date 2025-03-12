@@ -1,14 +1,12 @@
-package while1.kunnect.config.jwt;
+package while1.kunnect.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter

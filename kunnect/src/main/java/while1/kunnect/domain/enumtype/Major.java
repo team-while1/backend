@@ -1,11 +1,11 @@
-package while1.kunnect.domain;
+package while1.kunnect.domain.enumtype;
 
-public enum College {
+public enum Major {
     TEST1("test1설명"),
     TEST2("test2설명");
 
     private final String info;
-    College(String info) {
+    Major(String info) {
         this.info = info;
     }
 }

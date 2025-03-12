@@ -1,12 +1,13 @@
 package while1.kunnect.domain;
 
 import java.time.LocalDateTime;
-import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import while1.kunnect.domain.enumtype.College;
+import while1.kunnect.domain.enumtype.Major;
 
 @Entity
 @Getter
