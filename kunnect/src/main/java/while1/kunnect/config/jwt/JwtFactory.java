@@ -1,5 +1,6 @@
 package while1.kunnect.config.jwt;
 
+import java.security.Key;
 import java.time.Duration;
 import java.util.*;
 import io.jsonwebtoken.Header;
@@ -37,7 +38,9 @@ public class JwtFactory {
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .addClaims(claims)
-                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+//                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+//                      --> 비대칭키 알고리즘(ECDSA, RSA-256해시 함수)이지만 Key객체를 같이 넘겨줘야 해서 """우선 HS256(HMAC알고리즘) 사용"""
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 }
