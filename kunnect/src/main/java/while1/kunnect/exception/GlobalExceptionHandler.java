@@ -1,5 +1,6 @@
 package while1.kunnect.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,19 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/*
-    TODO : 여기서부터 다시 하기
- */
-
 //전역 예외 처리 클래스
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     //CustonException 예외 처리
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex){
-        return ResponseEntity.status(ex.getStatus())
-                .body(new ErrorResponse(ex.getMessage()));
+    public ResponseEntity<?> handleCustomException(CustomException ex) {
+        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
     }
 
     //@Valid 검증 실패 시 예외 처리(필수 입력값 오류 메시지 반환)
@@ -51,4 +47,23 @@ public class GlobalExceptionHandler {
             return error;
         }
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex) {
+        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+    }
+
+    // UnexpectedTypeException 처리 추가
+    @ExceptionHandler(jakarta.validation.UnexpectedTypeException.class)
+    public ResponseEntity<?> handleUnexpectedTypeException(jakarta.validation.UnexpectedTypeException ex) {
+        return ResponseEntity.badRequest().body(Map.of("error", "검증 오류", "message", ex.getMessage()));
+    }
+
+    // 모든 예외를 처리하는 일반 핸들러 추가
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleAllExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "서버 오류", "message", ex.getMessage()));
+    }
+
 }

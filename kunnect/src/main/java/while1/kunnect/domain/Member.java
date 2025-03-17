@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
+import while1.kunnect.domain.enumtype.Role;
 
 @Entity
 @Getter
@@ -46,9 +47,12 @@ public class Member {
     @Column(nullable = false)
     private Major major;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     private String refreshToken;
 
-    //refresh token 업데이트
     public void updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
     }

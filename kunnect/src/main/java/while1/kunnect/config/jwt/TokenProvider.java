@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import while1.kunnect.domain.Member;
 
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class TokenProvider {
     private final JwtProperties jwtProperties;
@@ -48,7 +48,7 @@ public class TokenProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            log.info("invalid token : {}", token);
+            log.debug("{} invalid token : {}", e, token);
             return false;
         }
     }

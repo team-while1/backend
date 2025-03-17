@@ -7,8 +7,8 @@ import while1.kunnect.exception.CustomException;
 import while1.kunnect.exception.ErrorCode;
 import while1.kunnect.repository.jwt.RefreshTokenRepository;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 

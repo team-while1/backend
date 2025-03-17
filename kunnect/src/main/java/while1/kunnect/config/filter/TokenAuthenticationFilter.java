@@ -5,13 +5,17 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import while1.kunnect.config.jwt.TokenProvider;
 
+@Component
+@RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-    private static TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
     private static final String HEADER_AUTHORIZATION = "Authorization";
     private static final String TOKEN_PREPIX = "Bearer ";
 
