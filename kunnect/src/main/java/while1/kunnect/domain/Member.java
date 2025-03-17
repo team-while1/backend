@@ -1,11 +1,14 @@
 package while1.kunnect.domain;
 
 import java.time.LocalDateTime;
-import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import while1.kunnect.domain.enumtype.College;
+import while1.kunnect.domain.enumtype.Major;
+import while1.kunnect.domain.enumtype.Role;
 
 @Entity
 @Getter
@@ -13,9 +16,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // TODO : @NoArgsConstructor와 @AllArgsConstructor -> @Builder 찾아보기
-//@JsonIgnoreProperties({"hibernateLAzyInitializer", "handler", "reviews"}) // hibernate프록시 무시
+@JsonIgnoreProperties({"hibernateLAzyInitializer", "handler", "member"}) // hibernate프록시 무시
 public class Member {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,12 +32,12 @@ public class Member {
     @JsonIgnore // api응답에서 비밀번호 필드 제외
     private String password;
 
-    @Column(updatable = false) // 회원가입 시 자동 생성(수정 불가)
+    @Column(name = "create_at", updatable = false) // 회원가입 시 자동 생성(수정 불가)
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    @Column(unique = true, nullable = false)
-    private Long studentId;
+    @Column(name = "student_num", unique = true, nullable = false)
+    private Long studentNum;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -45,9 +47,12 @@ public class Member {
     @Column(nullable = false)
     private Major major;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     private String refreshToken;
 
-    //refresh token 업데이트
     public void updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
     }
