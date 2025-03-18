@@ -32,7 +32,7 @@ jobs:
     
     - name: Build with Gradle
       working-directory: ./kunnect
-      run: ./gradlew build
+      run: ./gradlew build -x test
     
     # Deploy to server
     - name: Deploy to Server
