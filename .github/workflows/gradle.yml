@@ -27,11 +27,11 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
     
     - name: Change wrapper permissions
-      working-directory: ./backend
+      working-directory: ./kunnect
       run: chmod +x gradlew
     
     - name: Build with Gradle
-      working-directory: ./backend
+      working-directory: ./kunnect
       run: ./gradlew build
     
     # Deploy to server
