@@ -1,11 +1,9 @@
 package while1.kunnect.service;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import java.util.HashMap;
+import java.util.Map;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import while1.kunnect.domain.Member;
@@ -57,4 +55,12 @@ public class MemberService {
         return memberRepository.existsByName(name);
     }
 
+    @Transactional
+    public Map<String, String> saveAndGetTokens(Member member, String accessToken, String refreshToken) {
+        member.setRefreshToken(refreshToken);
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("accessToken", accessToken);
+        tokens.put("refreshToken", refreshToken);
+        return tokens;
+    }
 }

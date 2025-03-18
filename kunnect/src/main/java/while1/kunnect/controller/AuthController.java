@@ -46,19 +46,9 @@ public class AuthController {
         }
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(1));
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
-
-        member.setRefreshToken(refreshToken);
-
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
-
+        Map<String, String> tokens = memberService.saveAndGetTokens(member, accessToken, refreshToken);
         return ResponseEntity.ok().body(tokens);
     }
-
-
-
-
 
     @GetMapping("/check-email")
     public ResponseEntity<?> checkEmail(@RequestParam @Valid @NotNull @Email String email) {
