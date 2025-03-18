@@ -43,4 +43,4 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo -u ${{secrets.PERSON}} /home/${{secrets.PERSON}}/${{secrets.sh}}
+          sudo -u ${{secrets.PERSON}} /home/${{secrets.PERSON}}/${{secrets.SH}}
