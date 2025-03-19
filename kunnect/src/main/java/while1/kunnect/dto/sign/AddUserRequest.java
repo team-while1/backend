@@ -22,9 +22,8 @@ public class AddUserRequest {
     private String password;
 
     @JsonProperty("student_num")
-    @NotNull(message = "학번은 필수 입력값입니다.")
-    @Min(1)
-    private Long studentNum;
+    @NotBlank(message = "학번은 필수 입력값입니다.")
+    private String studentNum;
 
     @NotNull(message = "소속은 필수 입력값입니다.")
     private College college;
