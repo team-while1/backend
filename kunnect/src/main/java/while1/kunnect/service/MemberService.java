@@ -2,10 +2,13 @@ package while1.kunnect.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import while1.kunnect.config.jwt.TokenProvider;
 import while1.kunnect.domain.Member;
 import while1.kunnect.domain.enumtype.Role;
 import while1.kunnect.dto.sign.AddUserRequest;
@@ -18,6 +21,7 @@ import while1.kunnect.repository.MemberRepository;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TokenProvider tokenProvider;
 
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId)
@@ -26,12 +30,12 @@ public class MemberService {
 
     public Long save(AddUserRequest dto) {
         return memberRepository.save(Member.builder()
-                .email(dto.getEmail())
-                .name(dto.getName())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
-                .major(dto.getMajor())
-                .college(dto.getCollege())
-                .studentNum(dto.getStudentNum())
+                .email(dto.email())
+                .name(dto.name())
+                .password(bCryptPasswordEncoder.encode(dto.password()))
+                .major(dto.major())
+                .college(dto.college())
+                .studentNum(Long.valueOf(dto.studentNum()))
                 .role(Role.USER)
                 .build())
         .getId();
@@ -62,5 +66,20 @@ public class MemberService {
         tokens.put("accessToken", accessToken);
         tokens.put("refreshToken", refreshToken);
         return tokens;
+    }
+
+    @Transactional
+    public void logout(String accessToken) {
+        Long memberId = tokenProvider.getUserIdFromToken(accessToken);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        member.setRefreshToken(null);
+    }
+
+    public void deleteById(Long memberId) {
+        if (!memberRepository.existsById(memberId)) {
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        memberRepository.deleteById(memberId);
     }
 }

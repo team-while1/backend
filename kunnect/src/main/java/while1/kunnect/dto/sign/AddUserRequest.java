@@ -2,32 +2,31 @@ package while1.kunnect.dto.sign;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
+import jakarta.validation.constraints.Pattern;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
 
-@Getter
-public class AddUserRequest {
+public record AddUserRequest (
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     @Email(message = "올바른 이메일 형식을 입력하세요.")
-    private String email;
+    String email,
 
     @NotBlank(message = "별명은 필수 입력값입니다.")
-    private String name;
+    String name,
 
     @NotBlank(message = "비밀번호는 필수 입력값입니다.")
-    private String password;
+    String password,
 
     @JsonProperty("student_num")
     @NotBlank(message = "학번은 필수 입력값입니다.")
-    private String studentNum;
+    @Pattern(regexp = "^\\d+$", message = "학번은 숫자만 입력 가능합니다.")
+    String studentNum,
 
     @NotNull(message = "소속은 필수 입력값입니다.")
-    private College college;
+    College college,
 
     @NotNull(message = "전공은 필수 입력값입니다.")
-    private Major major;
-}
+    Major major
+) {}

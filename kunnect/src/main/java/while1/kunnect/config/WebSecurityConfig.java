@@ -40,9 +40,8 @@ public class WebSecurityConfig {
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 비활성화 (JWT 인증 사용)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/find/**").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/**").authenticated()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
 
@@ -55,10 +54,10 @@ public class WebSecurityConfig {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             response.getWriter().write("""
                                     {
-                                        "error": "Access Denied",
+                                        "error": "Access Denied about %s(%s)",
                                         "message": "로그인이 필요합니다."
                                     }
-                                    """);
+                                    """.formatted(request.getLocalName(), request.getRequestURL()));
                         })
                 )
         .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
