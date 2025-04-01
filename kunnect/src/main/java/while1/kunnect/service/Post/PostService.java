@@ -1,11 +1,14 @@
 package while1.kunnect.service.Post;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import while1.kunnect.domain.Member;
 import while1.kunnect.dto.post.CreatePostRequest;
 import while1.kunnect.dto.post.PostResponse;
+import while1.kunnect.entity.Like;
 import while1.kunnect.entity.Post;
+import while1.kunnect.repository.post.LikeRepository;
 import while1.kunnect.repository.post.PostRepository;
 
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
 
     public Post create(CreatePostRequest dto, Member writer) {
         Post post = Post.builder()
@@ -39,11 +43,18 @@ public class PostService {
                 .toList();
     }
 
+    @Transactional
     public PostResponse getOne(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("글 없음"));
+
+        // 조회수 증가
+        post.setViews(post.getViews() + 1);
+        postRepository.save(post); // 변경 사항 저장
+
         return toDto(post);
     }
+
 
     public Post update(Long id, CreatePostRequest dto, Member writer) {
         Post post = getOneEntity(id);
@@ -82,12 +93,37 @@ public class PostService {
                 .startDate(post.getStartDate())
                 .endDate(post.getEndDate())
                 .categoryId(post.getCategoryId())
+                .views(post.getViews())
+                .likes(post.getLikes())
                 .build();
     }
+
 
     private Post getOneEntity(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("글 없음"));
+    }
+
+    @Transactional
+    public void toggleLike(Long postId, Member member) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("글 없음"));
+
+        boolean alreadyLiked = likeRepository.existsByMemberAndPost(member, post);
+
+        if (alreadyLiked) {
+            likeRepository.deleteByMemberAndPost(member, post);
+            post.setLikes(post.getLikes() - 1);
+        } else {
+            Like like = Like.builder()
+                    .member(member)
+                    .post(post)
+                    .build();
+            likeRepository.save(like);
+            post.setLikes(post.getLikes() + 1);
+        }
+
+        postRepository.save(post);
     }
 }
 

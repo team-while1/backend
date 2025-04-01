@@ -49,4 +49,12 @@ public class PostController {
         postService.delete(id, userDetails.getMember());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<?> like(@PathVariable Long postId,
+                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.toggleLike(postId, userDetails.getMember());
+        return ResponseEntity.ok().build();
+    }
+
 }
