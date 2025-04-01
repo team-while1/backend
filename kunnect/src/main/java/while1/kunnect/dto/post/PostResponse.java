@@ -18,4 +18,6 @@ public class PostResponse {
     private LocalDate startDate;
     private LocalDate endDate;
     private String categoryId;
+    private int views;
+    private int likes;
 }
