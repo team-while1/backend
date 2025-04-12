@@ -19,3 +19,7 @@ spring:
 jwt:
   issuer: ${JWT_ISS}
   secret_key: ${JWT_SECRET}
+
+file:
+  upload-dir: C:/Users/user/Desktop/backend/kunnect/uploads
+
