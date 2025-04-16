@@ -58,6 +58,12 @@ public class AuthController {
         return ResponseEntity.ok().body(Map.of("message", "프로필 사진 수정 성공", "member", MemberResponseDto.from(member)));
     }
 
+    @PutMapping("/member/profile/basic")
+    public ResponseEntity<?> updateBasicProfile() {
+        Member member = memberService.updateBasicProfile();
+        return ResponseEntity.ok().body(Map.of("message", "프로필(기본 사진) 수정 성공", "member", MemberResponseDto.from(member)));
+    }
+
     @GetMapping("/test")
     public ResponseEntity<?> test(Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
         String a = principal.getName();

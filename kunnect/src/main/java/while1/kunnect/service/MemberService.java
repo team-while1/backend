@@ -39,7 +39,9 @@ import while1.kunnect.repository.MemberRepository;
 @Slf4j
 @RequiredArgsConstructor
 public class MemberService {
+    private static final String UPLOAD_PRE = "/var/www";
     private static final String UPLOAD_DIR = "/images/profile";
+    private static final String BASIC_PIC = UPLOAD_PRE + UPLOAD_DIR + "/anonymous.png";
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -189,7 +191,7 @@ public class MemberService {
         Member member = memberRepository.findByEmail(getUserEmailFromAuthentication())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         try {
-            Files.createDirectories(Paths.get(UPLOAD_DIR));
+            Files.createDirectories(Paths.get(UPLOAD_PRE + UPLOAD_DIR));
             String savedPath = saveNewImage(request.image());
             deleteExistingImage(member.getProfileUrl());
             member.setProfileUrl(savedPath);
@@ -199,24 +201,32 @@ public class MemberService {
         return member;
     }
 
+
     private String saveNewImage(MultipartFile image) throws IOException {
         String originalFilename = image.getOriginalFilename();
-        log.info("image: {} | originalFilename: {}", image ,originalFilename);
-        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        log.info("extension: {}", extension);
+        String extension = originalFilename.contains(".")
+                ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                : ".png";
         String fileName = UUID.randomUUID() + extension;
-        Path filePath = Paths.get(UPLOAD_DIR + "/" + fileName);
+        Path filePath = Paths.get(UPLOAD_PRE + UPLOAD_DIR + "/" + fileName);
+        String result = UPLOAD_DIR + "/" + fileName;
         Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return filePath.toString();
+        return result;
     }
 
     private void deleteExistingImage(String currentPhotoUrl) {
-        try { // 기본 이미지가 아닌 경우만 삭제
-            if (!currentPhotoUrl.equals("/var/www/images/profile/anonymous.png")) {
-                Files.deleteIfExists(Paths.get(currentPhotoUrl));
-            }
+        try {
+            Files.deleteIfExists(Paths.get(currentPhotoUrl));
         } catch (IOException e) {
             log.warn("기존 이미지 삭제 중 오류 발생: {}", e.getMessage());
         }
+    }
+
+    public Member updateBasicProfile() {
+        Member member = memberRepository.findByEmail(getUserEmailFromAuthentication())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        deleteExistingImage(member.getProfileUrl());
+        member.setProfileUrl(BASIC_PIC);
+        return member;
     }
 }
