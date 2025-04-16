@@ -3,10 +3,16 @@ package while1.kunnect.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import while1.kunnect.config.jwt.TokenProvider;
 import while1.kunnect.domain.Member;
@@ -69,11 +75,25 @@ public class MemberService {
     }
 
     @Transactional
-    public void logout(String accessToken) {
-        Long memberId = tokenProvider.getUserIdFromToken(accessToken);
-        Member member = memberRepository.findById(memberId)
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        Object principal = auth.getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else if (principal instanceof String) {
+            username = (String)principal;
+        } else {
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        Member member = memberRepository.findByEmail(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         member.setRefreshToken(null);
+        new SecurityContextLogoutHandler().logout(request, response, auth);
     }
 
     public void deleteById(Long memberId) {
