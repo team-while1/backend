@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
 import while1.kunnect.domain.enumtype.Role;
@@ -36,6 +37,10 @@ public class Member {
     @CreationTimestamp
     private LocalDateTime createDate;
 
+    @Column(name = "update_at")
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
+
     @Column(name = "student_num", unique = true, nullable = false)
     private Long studentNum;
 
@@ -51,10 +56,8 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
+    private String profileUrl = "/images/profile/anonymous.png";
+
     private String refreshToken;
-
-    public void updateRefreshToken(String refreshToken){
-        this.refreshToken = refreshToken;
-    }
-
 }

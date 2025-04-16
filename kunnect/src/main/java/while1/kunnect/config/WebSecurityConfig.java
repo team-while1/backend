@@ -56,10 +56,10 @@ public class WebSecurityConfig {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             response.getWriter().write("""
                                     {
-                                        "error": "Access Denied",
+                                        "error": "Access Denied about %s(%s)",
                                         "message": "로그인이 필요합니다."
                                     }
-                                    """);
+                                    """.formatted(request.getLocalName(), request.getRequestURL()));
                         })
                 )
         .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
