@@ -12,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import while1.kunnect.config.jwt.TokenProvider;
 import while1.kunnect.domain.Member;
+import while1.kunnect.dto.FindIdRequest;
 import while1.kunnect.dto.MemberDto;
+import while1.kunnect.dto.UpdatePasswordRequest;
 import while1.kunnect.dto.sign.AddUserRequest;
 import while1.kunnect.dto.sign.LoginUserRequest;
 import while1.kunnect.exception.CustomException;
@@ -49,6 +51,19 @@ public class MemberController {
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
         Map<String, String> tokens = memberService.saveAndGetTokens(member, accessToken, refreshToken);
         return ResponseEntity.ok().body(tokens);
+    }
+
+    @PostMapping("/find/id")
+    public ResponseEntity<?> findId(@RequestBody @Valid FindIdRequest request) {
+        Member member = memberService.findEmail(request.studentNum());
+        return ResponseEntity.ok().body(MemberDto.from(member));
+    }
+
+    @PostMapping("/find/pw-change")
+    public ResponseEntity<?> changePassword(@RequestBody @Valid UpdatePasswordRequest request) {
+        memberService.updatePassword(request);
+        String message = "비밀번호 변경 성공";
+        return ResponseEntity.ok().body(Map.of("message", message));
     }
 
     @GetMapping("/check-email")

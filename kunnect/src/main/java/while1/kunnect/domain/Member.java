@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
 import while1.kunnect.domain.enumtype.Role;
@@ -35,6 +36,10 @@ public class Member {
     @Column(name = "create_at", updatable = false) // 회원가입 시 자동 생성(수정 불가)
     @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Column(name = "update_at")
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 
     @Column(name = "student_num", unique = true, nullable = false)
     private Long studentNum;

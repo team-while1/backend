@@ -24,6 +24,10 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
     INVALID_INPUT(HttpStatus.BAD_REQUEST, "입력값이 잘못되었습니다."),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다. 필수 값을 입력하세요."),
+    INVALID_NAME(HttpStatus.BAD_REQUEST, "일치하는 별명이 존재하지 않습니다."),
+    INVALID_STUDENT_NUM(HttpStatus.BAD_REQUEST, "일치하는 학번이 존재하지 않습니다."),
+    INVALID_COLLEGE(HttpStatus.BAD_REQUEST, "유효하지 않은 소속입니다."),
+    INVALID_MAJOR(HttpStatus.BAD_REQUEST, "유효하지 않은 전공입니다."),
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 리프레시 토큰입니다."),
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "새 비밀번호와 확인 비밀번호가 일치하지 않습니다."),
     INVALID_GOOGLE_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 구글 토큰입니다.");
