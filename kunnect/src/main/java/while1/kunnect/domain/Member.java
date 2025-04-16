@@ -56,10 +56,8 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
+    private String profileUrl = "/images/profile/anonymous.png";
+
     private String refreshToken;
-
-    public void updateRefreshToken(String refreshToken){
-        this.refreshToken = refreshToken;
-    }
-
 }

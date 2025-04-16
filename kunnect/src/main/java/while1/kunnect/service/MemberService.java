@@ -1,33 +1,45 @@
 package while1.kunnect.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 import while1.kunnect.domain.Member;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
 import while1.kunnect.domain.enumtype.Role;
 import while1.kunnect.dto.MemberUpdateDto;
+import while1.kunnect.dto.ProfileUpdateDto;
 import while1.kunnect.dto.UpdatePasswordRequest;
-import while1.kunnect.dto.sign.AddUserRequest;
+import while1.kunnect.dto.AddUserRequest;
 import while1.kunnect.exception.CustomException;
 import while1.kunnect.exception.ErrorCode;
 import while1.kunnect.repository.MemberRepository;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemberService {
+    private static final String UPLOAD_DIR = "/images/profile";
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -168,5 +180,43 @@ public class MemberService {
             throw new CustomException(ErrorCode.INVALID_STUDENT_NUM);
         }
         member.setPassword(bCryptPasswordEncoder.encode(request.password()));
+    }
+
+    public Member updateProfile(ProfileUpdateDto request) {
+        if (request.image() == null) {
+            throw new CustomException(ErrorCode.INVALID_INPUT);
+        }
+        Member member = memberRepository.findByEmail(getUserEmailFromAuthentication())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        try {
+            Files.createDirectories(Paths.get(UPLOAD_DIR));
+            String savedPath = saveNewImage(request.image());
+            deleteExistingImage(member.getProfileUrl());
+            member.setProfileUrl(savedPath);
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.ERROR_IMAGE_THING);
+        }
+        return member;
+    }
+
+    private String saveNewImage(MultipartFile image) throws IOException {
+        String originalFilename = image.getOriginalFilename();
+        log.info("image: {} | originalFilename: {}", image ,originalFilename);
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        log.info("extension: {}", extension);
+        String fileName = UUID.randomUUID() + extension;
+        Path filePath = Paths.get(UPLOAD_DIR + "/" + fileName);
+        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        return filePath.toString();
+    }
+
+    private void deleteExistingImage(String currentPhotoUrl) {
+        try { // 기본 이미지가 아닌 경우만 삭제
+            if (!currentPhotoUrl.equals("/var/www/images/profile/anonymous.png")) {
+                Files.deleteIfExists(Paths.get(currentPhotoUrl));
+            }
+        } catch (IOException e) {
+            log.warn("기존 이미지 삭제 중 오류 발생: {}", e.getMessage());
+        }
     }
 }

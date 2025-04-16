@@ -5,18 +5,13 @@ import java.util.Map;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import while1.kunnect.config.jwt.TokenProvider;
 import while1.kunnect.domain.Member;
-import while1.kunnect.dto.FindIdRequest;
-import while1.kunnect.dto.MemberDto;
-import while1.kunnect.dto.UpdatePasswordRequest;
-import while1.kunnect.dto.sign.AddUserRequest;
-import while1.kunnect.dto.sign.LoginUserRequest;
+import while1.kunnect.dto.*;
 import while1.kunnect.exception.CustomException;
 import while1.kunnect.exception.ErrorCode;
 import while1.kunnect.service.MemberService;
@@ -56,7 +51,7 @@ public class MemberController {
     @PostMapping("/find/id")
     public ResponseEntity<?> findId(@RequestBody @Valid FindIdRequest request) {
         Member member = memberService.findEmail(request.studentNum());
-        return ResponseEntity.ok().body(MemberDto.from(member));
+        return ResponseEntity.ok().body(MemberResponseDto.from(member));
     }
 
     @PostMapping("/find/pw-change")

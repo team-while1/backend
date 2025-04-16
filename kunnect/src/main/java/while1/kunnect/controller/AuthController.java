@@ -1,7 +1,6 @@
 package while1.kunnect.controller;
 
 import java.security.Principal;
-import java.time.Duration;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,12 +10,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import while1.kunnect.domain.Member;
-import while1.kunnect.dto.MemberDto;
+import while1.kunnect.dto.MemberResponseDto;
 import while1.kunnect.dto.MemberUpdateDto;
+import while1.kunnect.dto.ProfileUpdateDto;
 import while1.kunnect.service.MemberService;
 
 @RestController
@@ -34,9 +35,9 @@ public class AuthController {
     }
 
     @GetMapping("/member")
-    public MemberDto getMember(HttpServletRequest request, HttpServletResponse response) {
+    public MemberResponseDto getMember(HttpServletRequest request, HttpServletResponse response) {
         Member member = memberService.findMember(request, response);
-        return MemberDto.from(member);
+        return MemberResponseDto.from(member);
     }
 
     @DeleteMapping("/member")
@@ -48,13 +49,19 @@ public class AuthController {
     @PutMapping("/member")
     public ResponseEntity<?> updateMember(@Valid @RequestBody MemberUpdateDto request) {
         Member member = memberService.updateMember(request);
-        return ResponseEntity.ok().body(Map.of("message", "회원 정보 수정 성공", "member", MemberDto.from(member)));
+        return ResponseEntity.ok().body(Map.of("message", "회원 정보 수정 성공", "member", MemberResponseDto.from(member)));
+    }
+
+    @PutMapping("/member/profile")
+    public ResponseEntity<?> updateProfile(@ModelAttribute ProfileUpdateDto request) {
+        Member member = memberService.updateProfile(request);
+        return ResponseEntity.ok().body(Map.of("message", "프로필 사진 수정 성공", "member", MemberResponseDto.from(member)));
     }
 
     @GetMapping("/test")
-    public ResponseEntity<?> test(Principal principal, UserDetails userDetails) {
+    public ResponseEntity<?> test(Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
         String a = principal.getName();
-        String b = ((User)userDetails).getUsername();
+        String b = userDetails.getUsername();
         Collection<? extends GrantedAuthority> authorities = ((User)userDetails).getAuthorities();
         Map<String, Object> message = new HashMap<>();
         message.put("principal", a);

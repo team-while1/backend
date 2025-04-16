@@ -5,7 +5,7 @@ import while1.kunnect.domain.Member;
 import while1.kunnect.domain.enumtype.College;
 import while1.kunnect.domain.enumtype.Major;
 
-public record MemberDto(
+public record MemberResponseDto(
         @JsonProperty("member_id")
         Long id,
         String email,
@@ -13,16 +13,19 @@ public record MemberDto(
         @JsonProperty("student_num")
         String studentNum,
         College college,
-        Major major
+        Major major,
+        @JsonProperty("profile_url")
+        String profileUrl
 ) {
-    public static MemberDto from(Member member) {
-        return new MemberDto(
+    public static MemberResponseDto from(Member member) {
+        return new MemberResponseDto(
                 member.getId(),
                 member.getEmail(),
                 member.getName(),
                 member.getStudentNum().toString(),
                 member.getCollege(),
-                member.getMajor()
+                member.getMajor(),
+                member.getProfileUrl()
         );
     }
 }
