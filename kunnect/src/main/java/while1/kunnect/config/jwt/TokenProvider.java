@@ -14,6 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import while1.kunnect.domain.Member;
+import while1.kunnect.repository.MemberRepository;
+import while1.kunnect.security.CustomUserDetails;
 
 
 @Slf4j
@@ -21,6 +23,7 @@ import while1.kunnect.domain.Member;
 @RequiredArgsConstructor
 public class TokenProvider {
     private final JwtProperties jwtProperties;
+    private final MemberRepository memberRepository;
 
     public String generateToken(Member member, Duration expiredAt){
         Date now = new Date();
@@ -58,11 +61,17 @@ public class TokenProvider {
         Claims claims = getClaims(token);
         Set<SimpleGrantedAuthority> authorities = Collections.
                 singleton(new SimpleGrantedAuthority("ROLE_USER"));
+
+        Long memberId = getUserIdFromToken(token);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("해당 유저 없음"));
+
         return new UsernamePasswordAuthenticationToken(
-                new User(claims.getSubject(), "" , authorities),
-                token,
+                new CustomUserDetails(member),
+                null,
                 authorities
         );
+
     }
 
 
