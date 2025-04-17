@@ -2,6 +2,8 @@ package while1.kunnect.controller;
 
 import java.time.Duration;
 import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -46,6 +48,12 @@ public class MemberController {
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
         Map<String, String> tokens = memberService.saveAndGetTokens(member, accessToken, refreshToken);
         return ResponseEntity.ok().body(tokens);
+    }
+
+    @GetMapping("/member")
+    public MemberResponseDto getMember(HttpServletRequest request, HttpServletResponse response) {
+        Member member = memberService.findMember(request, response);
+        return MemberResponseDto.from(member);
     }
 
     @PostMapping("/find/id")
