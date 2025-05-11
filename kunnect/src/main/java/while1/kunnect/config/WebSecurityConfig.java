@@ -40,13 +40,11 @@ public class WebSecurityConfig {
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 비활성화 (JWT 인증 사용)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
+                        .requestMatchers("/api/signup", "/api/login", "/api/member").permitAll()
                         .requestMatchers("/api/auth/find/**").permitAll()
-                        .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
-
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception

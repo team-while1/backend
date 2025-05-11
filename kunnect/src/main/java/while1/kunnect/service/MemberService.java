@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 import while1.kunnect.domain.Member;
 import while1.kunnect.domain.enumtype.College;
@@ -41,7 +40,7 @@ import while1.kunnect.repository.MemberRepository;
 public class MemberService {
     private static final String UPLOAD_PRE = "/var/www";
     private static final String UPLOAD_DIR = "/images/profile";
-    private static final String BASIC_PIC = UPLOAD_PRE + UPLOAD_DIR + "/anonymous.png";
+    private static final String BASIC_PIC = UPLOAD_DIR + "/anonymous.png";
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

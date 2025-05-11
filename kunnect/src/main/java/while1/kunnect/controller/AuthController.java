@@ -34,12 +34,6 @@ public class AuthController {
         return ResponseEntity.ok().body(Map.of("message", "로그아웃 성공"));
     }
 
-    @GetMapping("/member")
-    public MemberResponseDto getMember(HttpServletRequest request, HttpServletResponse response) {
-        Member member = memberService.findMember(request, response);
-        return MemberResponseDto.from(member);
-    }
-
     @DeleteMapping("/member")
     public ResponseEntity<?> deleteMember(HttpServletRequest request, HttpServletResponse response) {
         memberService.deleteById(request, response);
