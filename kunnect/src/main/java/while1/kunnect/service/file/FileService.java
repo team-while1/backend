@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class FileService {
@@ -23,25 +26,32 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public FileEntity uploadFile(Long postId, MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
-        String filePath = Paths.get(uploadDir, fileName).toString();
+    public List<FileEntity> uploadFiles(Long postId, List<MultipartFile> files) throws IOException {
+        List<FileEntity> uploadedFiles = new ArrayList<>();
 
         File directory = new File(uploadDir);
         if (!directory.exists()) {
-            directory.mkdirs();  // 하위까지 생성
+            directory.mkdirs();
         }
 
-        File dest = new File(filePath);
-        file.transferTo(dest);
+        for (MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
+            String filePath = Paths.get(uploadDir, fileName).toString();
 
-        FileEntity fileEntity = new FileEntity();
-        fileEntity.setPostId(postId);
-        fileEntity.setFileName(fileName);
-        fileEntity.setFilePath(filePath);
+            File dest = new File(filePath);
+            file.transferTo(dest);
 
-        return fileRepository.save(fileEntity);
+            FileEntity fileEntity = new FileEntity();
+            fileEntity.setPostId(postId);
+            fileEntity.setFileName(fileName);
+            fileEntity.setFilePath(filePath);
+
+            uploadedFiles.add(fileRepository.save(fileEntity));
+        }
+
+        return uploadedFiles;
     }
+
 
 
     public Optional<FileEntity> getFile(Long fileId) {
