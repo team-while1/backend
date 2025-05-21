@@ -1,15 +1,15 @@
 package while1.kunnect.domain;
 
 import java.time.LocalDateTime;
+import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import while1.kunnect.domain.enumtype.College;
-import while1.kunnect.domain.enumtype.Major;
-import while1.kunnect.domain.enumtype.Role;
+import while1.kunnect.domain.enumtype.*;
+import while1.kunnect.entity.Application;
 
 @Entity
 @Getter
@@ -60,4 +60,13 @@ public class Member {
     private String profileUrl = "/images/profile/anonymous.png";
 
     private String refreshToken;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications = new ArrayList<>();
+
+    // 편의 메서드 : 양방향 연관관계 설정
+    public void addApplication(Application application) {
+        this.applications.add(application);
+        if (application.getMember() != this) application.setMember(this);
+    }
 }
