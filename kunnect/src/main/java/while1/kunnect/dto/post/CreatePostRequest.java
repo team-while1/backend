@@ -1,6 +1,8 @@
 package while1.kunnect.dto.post;
 
 import lombok.Data;
+import org.hibernate.mapping.List;
+import while1.kunnect.entity.PostStatus;
 
 import java.time.LocalDate;
 
@@ -12,5 +14,7 @@ public class CreatePostRequest {
     private LocalDate endDate;
     private int totalSlots;
     private String categoryId;
-    private Boolean archived;
+    //private Boolean archived; // 변수 변경 -> status
+    private PostStatus status;
 }
+

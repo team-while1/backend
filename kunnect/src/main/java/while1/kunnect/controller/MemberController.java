@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import while1.kunnect.config.jwt.TokenProvider;
 import while1.kunnect.domain.Member;
-import while1.kunnect.dto.*;
+import while1.kunnect.dto.member.*;
 import while1.kunnect.exception.CustomException;
 import while1.kunnect.exception.ErrorCode;
 import while1.kunnect.service.MemberService;

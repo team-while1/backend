@@ -1,4 +1,4 @@
-package while1.kunnect.dto;
+package while1.kunnect.dto.member;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;

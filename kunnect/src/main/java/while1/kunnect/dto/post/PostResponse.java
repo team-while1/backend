@@ -20,4 +20,6 @@ public class PostResponse {
     private String categoryId;
     private int views;
     private int likes;
+    private int totalSlots;
+    private int currentSlots;
 }

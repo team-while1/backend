@@ -15,9 +15,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import while1.kunnect.domain.Member;
-import while1.kunnect.dto.MemberResponseDto;
-import while1.kunnect.dto.MemberUpdateDto;
-import while1.kunnect.dto.ProfileUpdateDto;
+import while1.kunnect.dto.member.MemberResponseDto;
+import while1.kunnect.dto.member.MemberUpdateDto;
+import while1.kunnect.dto.member.ProfileUpdateDto;
 import while1.kunnect.service.MemberService;
 
 @RestController
