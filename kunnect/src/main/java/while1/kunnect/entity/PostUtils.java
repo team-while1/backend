@@ -2,7 +2,6 @@ package while1.kunnect.entity;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 public final class PostUtils {
 
@@ -19,6 +18,15 @@ public final class PostUtils {
         if (application.getPost() != post) {
             application.setPost(post);
         }
+    }
+
+    /**
+     * 현재 신청자 수 계산
+     * @param post 게시글
+     * @return 신청자 수
+     */
+    public static int getParticipants(Post post) {
+        return post.getApplications().size();
     }
 
     /**
