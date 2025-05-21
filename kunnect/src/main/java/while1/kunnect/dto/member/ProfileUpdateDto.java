@@ -1,4 +1,4 @@
-package while1.kunnect.dto;
+package while1.kunnect.dto.member;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -33,8 +33,7 @@ public class Application {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus status      // 신청 상태 (대기, 승인, 거절)
-          = ApplicationStatus.PENDING;;
+    private ApplicationStatus status;      // 신청 상태 (대기, 승인, 거절)
 
     private String comment;               // 신청 시 남긴 코멘트
 
