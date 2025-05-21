@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum ApplicationStatus {
     PENDING("대기"),
     APPROVED("승인"),
-    REJECTED("거절"),
-    CANCELED("취소");
+    REJECTED("거절");
+    // "취소"는 데이터를 지워버리면 됨.
 
     private final String status;
 
