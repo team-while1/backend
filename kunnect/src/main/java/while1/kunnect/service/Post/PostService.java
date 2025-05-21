@@ -28,7 +28,8 @@ public class PostService {
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .categoryId(dto.getCategoryId())
-                .archived(dto.getArchived())
+             // .archived(dto.getArchived()) // 변수 변경 -> status
+                .status(dto.getStatus())
                 .totalSlots(dto.getTotalSlots())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -68,7 +69,8 @@ public class PostService {
         post.setEndDate(dto.getEndDate());
         post.setCategoryId(dto.getCategoryId());
         post.setTotalSlots(dto.getTotalSlots());
-        post.setArchived(dto.getArchived());
+        //post.setArchived(dto.getArchived()); // 변수 변경 -> status
+        post.setStatus(dto.getStatus());
         post.setUpdatedAt(LocalDateTime.now());
 
         return postRepository.save(post);
