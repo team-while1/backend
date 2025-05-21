@@ -8,6 +8,7 @@ import while1.kunnect.dto.post.CreatePostRequest;
 import while1.kunnect.dto.post.PostResponse;
 import while1.kunnect.entity.Like;
 import while1.kunnect.entity.Post;
+import while1.kunnect.entity.PostUtils;
 import while1.kunnect.repository.post.LikeRepository;
 import while1.kunnect.repository.post.PostRepository;
 
@@ -97,6 +98,8 @@ public class PostService {
                 .categoryId(post.getCategoryId())
                 .views(post.getViews())
                 .likes(post.getLikes())
+                .totalSlots(post.getTotalSlots())
+                .currentSlots(PostUtils.getParticipants(post))
                 .build();
     }
 
