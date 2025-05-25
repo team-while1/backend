@@ -18,12 +18,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/applications")
 public class ApplicationController {
 
     private final ApplicationService applicationService;
 
     // 신청하기
-    @PostMapping("/api/applications")
+    @PostMapping
     public ResponseEntity<ApplicationResponse> createApplication(
             @RequestBody ApplicationCreateRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -39,16 +40,16 @@ public class ApplicationController {
     }
 
     // 신청 취소하기
-    @DeleteMapping("/api/applications/{applicationId}")
+    @DeleteMapping("/{applicationId}")
     public ResponseEntity<Void> cancelApplication(
-            @PathVariable Long applicationId,
+            @PathVariable("applicationId") Long applicationId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         applicationService.cancelApplication(applicationId, userDetails.getMember().getId());
         return ResponseEntity.noContent().build();
     }
 
     // 내 신청 목록 조회
-    @GetMapping("/api/applications/my")
+    @GetMapping("/my")
     public ResponseEntity<List<ApplicationResponse>> getMyApplications(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         List<ApplicationResponse> applications = applicationService.getApplicationsByMember(
@@ -58,9 +59,9 @@ public class ApplicationController {
     }
 
     // 신청 상세 조회
-    @GetMapping("/api/applications/{applicationId}")
+    @GetMapping("/{applicationId}")
     public ResponseEntity<ApplicationResponse> getApplication(
-            @PathVariable Long applicationId,
+            @PathVariable("applicationId") Long applicationId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         ApplicationResponse application = applicationService.getApplicationById(
                 applicationId,
@@ -70,9 +71,9 @@ public class ApplicationController {
     }
 
     // 게시글의 신청 목록 조회 (게시글 작성자 전용)
-    @GetMapping("/api/posts/{postId}/applications")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<List<ApplicationResponse>> getPostApplications(
-            @PathVariable Long postId,
+            @PathVariable("postId") Long postId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         List<ApplicationResponse> applications = applicationService.getApplicationsByPost(
                 postId,
@@ -82,9 +83,9 @@ public class ApplicationController {
     }
 
     // 신청 상태 변경 (승인/거절)
-    @PatchMapping("/api/applications/{applicationId}/status")
+    @PatchMapping("/status/{applicationId}")
     public ResponseEntity<ApplicationResponse> updateApplicationStatus(
-            @PathVariable Long applicationId,
+            @PathVariable("applicationId") Long applicationId,
             @RequestBody ApplicationStatusUpdateRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (request.status() == null) {
