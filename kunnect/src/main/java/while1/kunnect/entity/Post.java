@@ -49,7 +49,6 @@ public class Post {
     // private Boolean archived;        // 모집 완료 여부
     // ********** 수정 후 (status)   *********
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     private PostStatus status;       // 모집 상태
     private LocalDate startDate;     // 모집 시작일
     private LocalDate endDate;       // 모집 마감일

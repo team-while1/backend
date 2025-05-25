@@ -27,7 +27,7 @@ public enum ErrorCode {
 
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
     INVALID_INPUT(HttpStatus.BAD_REQUEST, "입력값이 잘못되었습니다."),
-    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다. 필수 값을 입력하세요."),
+    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "이미 처리된 요청입니다"),
     INVALID_NAME(HttpStatus.BAD_REQUEST, "별명이 일치하지 않습니다."),
     INVALID_STUDENT_NUM(HttpStatus.BAD_REQUEST, "학번이 일치하지 않습니다."),
     INVALID_COLLEGE(HttpStatus.BAD_REQUEST, "유효하지 않은 소속입니다."),
