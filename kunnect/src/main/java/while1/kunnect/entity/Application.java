@@ -31,7 +31,6 @@ public class Application {
     private LocalDateTime modifyAt;       // 수정 시간
     private LocalDateTime processedAt;    // 신청 처리 시점 (승인/거절 시점)
 
-    @Builder.Default
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;      // 신청 상태 (대기, 승인, 거절)
 
