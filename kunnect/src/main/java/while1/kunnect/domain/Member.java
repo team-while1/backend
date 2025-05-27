@@ -62,6 +62,7 @@ public class Member {
     private String refreshToken;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Application> applications = new ArrayList<>();
 
     // 편의 메서드 : 양방향 연관관계 설정
