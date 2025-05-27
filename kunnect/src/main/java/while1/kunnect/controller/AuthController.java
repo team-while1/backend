@@ -27,8 +27,7 @@ public class AuthController {
     private final MemberService memberService;
 
 
-    // @AuthenticationPrincipal
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         memberService.logout(request, response);
         return ResponseEntity.ok().body(Map.of("message", "로그아웃 성공"));
