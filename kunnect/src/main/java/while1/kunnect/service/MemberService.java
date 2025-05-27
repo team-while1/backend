@@ -39,7 +39,7 @@ import while1.kunnect.repository.MemberRepository;
 public class MemberService {
     private static final String UPLOAD_PRE = "/var/www";
     private static final String UPLOAD_DIR = "/images/profile";
-    private static final String BASIC_PIC = UPLOAD_PRE + UPLOAD_DIR + "/anonymous.png";
+    private static final String BASIC_PIC = UPLOAD_DIR + "/anonymous.png";
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
