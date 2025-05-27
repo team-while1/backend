@@ -3,7 +3,7 @@
 **/*.pem
 **/*.key
 **/*.crt
-**/*log*
+**/*log
 **/.DS_Store
 **/Thumbs.db
 **/out/
