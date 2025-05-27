@@ -40,6 +40,7 @@ public class WebSecurityConfig {
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 비활성화 (JWT 인증 사용)
                 .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/signup", "/api/login").permitAll()
                         .requestMatchers("/api/signup", "/api/login", "/api/member").permitAll()
                         .requestMatchers("/api/auth/find/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()

@@ -9,6 +9,7 @@ import while1.kunnect.domain.Member;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Getter
@@ -44,9 +45,25 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private Boolean archived;        // 모집 완료 여부
+    // ********** 수정 전 (archived) *********
+    // private Boolean archived;        // 모집 완료 여부
+    // ********** 수정 후 (status)   *********
+    @Enumerated(EnumType.STRING)
+    private PostStatus status;       // 모집 상태
     private LocalDate startDate;     // 모집 시작일
     private LocalDate endDate;       // 모집 마감일
     private int totalSlots;          // 모집 인원
     private String categoryId;       // 카테고리
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
+    private List<Application> applications = new ArrayList<>();
+
+    public void changeStatus(PostStatus status) {
+        this.status = status;
+    }
+
+    public void addApplication(Application application) {
+        this.applications.add(application);
+        if (application.getPost() != this) application.setPost(this);
+    }
 }

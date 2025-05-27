@@ -8,6 +8,7 @@ import while1.kunnect.dto.post.CreatePostRequest;
 import while1.kunnect.dto.post.PostResponse;
 import while1.kunnect.entity.Like;
 import while1.kunnect.entity.Post;
+import while1.kunnect.entity.PostUtils;
 import while1.kunnect.repository.post.LikeRepository;
 import while1.kunnect.repository.post.PostRepository;
 
@@ -28,7 +29,8 @@ public class PostService {
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .categoryId(dto.getCategoryId())
-                .archived(dto.getArchived())
+             // .archived(dto.getArchived()) // 변수 변경 -> status
+                .status(dto.getStatus())
                 .totalSlots(dto.getTotalSlots())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -68,7 +70,8 @@ public class PostService {
         post.setEndDate(dto.getEndDate());
         post.setCategoryId(dto.getCategoryId());
         post.setTotalSlots(dto.getTotalSlots());
-        post.setArchived(dto.getArchived());
+        //post.setArchived(dto.getArchived()); // 변수 변경 -> status
+        post.setStatus(dto.getStatus());
         post.setUpdatedAt(LocalDateTime.now());
 
         return postRepository.save(post);
@@ -95,6 +98,8 @@ public class PostService {
                 .categoryId(post.getCategoryId())
                 .views(post.getViews())
                 .likes(post.getLikes())
+                .totalSlots(post.getTotalSlots())
+                .currentSlots(PostUtils.getParticipants(post))
                 .build();
     }
 
