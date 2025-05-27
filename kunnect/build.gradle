@@ -37,6 +37,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1' // 라이브러리 : 자바 jwt
     implementation 'me.paulschwarz:spring-dotenv:4.0.0' // 라이브러리 : .env파일 로드
     implementation 'javax.xml.bind:jaxb-api:2.3.1' // jdk8 이후 제외되어 Converter 추가
+
+    implementation 'nl.martijndwars:web-push:5.1.0'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 }
 
 tasks.named('test') {
