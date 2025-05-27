@@ -56,6 +56,7 @@ public class Post {
     private String categoryId;       // 카테고리
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
+    @Builder.Default
     private List<Application> applications = new ArrayList<>();
 
     public void changeStatus(PostStatus status) {
