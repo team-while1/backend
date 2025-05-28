@@ -1,6 +1,8 @@
 package while1.kunnect.config.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +21,27 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final String HEADER_AUTHORIZATION = "Authorization";
     private static final String TOKEN_PREPIX = "Bearer ";
 
+    // permitAll 경로들 정의
+    private static final List<String> PERMIT_ALL_PATHS = Arrays.asList(
+            "/api/signup",
+            "/api/login",
+            "/api/member",
+            "/api/auth/find"
+    );
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
+
+        String requestURI = request.getRequestURI();
+
+        // permitAll 경로는 JWT 검증 건너뛰기
+        if (shouldSkipFilter(requestURI)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 요청 헤더 Authorization 키 값 조회
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
@@ -42,5 +60,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return authorizationHeader.substring(TOKEN_PREPIX.length());
         }
         return null;
+    }
+
+    /**
+     * JWT 검증을 건너뛸 경로인지 확인
+     */
+    private boolean shouldSkipFilter(String requestURI) {
+        return PERMIT_ALL_PATHS.stream()
+                .anyMatch(path -> requestURI.startsWith(path)) ||
+                requestURI.startsWith("/static/") ||
+                requestURI.equals("/") ||
+                requestURI.startsWith("/images/");
     }
 }
