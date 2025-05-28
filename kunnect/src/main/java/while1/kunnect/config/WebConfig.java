@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /*
-    WebSecurityConfig가 우선순위가 높아서 WebConfig의 CORS 설정 무시됨
+    WebSecurityConfig가 우선순위가 높아서 WebConfig의 CORS 설정 무시
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
