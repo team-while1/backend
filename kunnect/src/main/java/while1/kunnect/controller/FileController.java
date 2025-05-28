@@ -11,6 +11,7 @@ import while1.kunnect.service.file.FileService;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,19 +24,14 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping
-    public ResponseEntity<FileResponseDto> uploadFile(
-            @RequestParam("post_id") Long postId,
-            @RequestParam("file") MultipartFile file) throws IOException {
-        FileEntity saved = fileService.uploadFile(postId, file);
-        FileResponseDto response = new FileResponseDto(
-                saved.getFileId(),
-                saved.getPostId(),
-                saved.getFileName(),
-                saved.getFilePath()
-        );
-        return ResponseEntity.ok(response);
+    @PostMapping("/upload-multiple")
+    public ResponseEntity<List<FileEntity>> uploadMultipleFiles(
+            @RequestParam("postId") Long postId,
+            @RequestParam("files") List<MultipartFile> files) throws IOException {
+        List<FileEntity> savedFiles = fileService.uploadFiles(postId, files);
+        return ResponseEntity.ok(savedFiles);
     }
+
 
     @GetMapping("/{fileId}")
     public ResponseEntity<Object> getFile(@PathVariable Long fileId) {

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: nl.martijndwars:web-push:5.1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="nl.martijndwars" artifactId="web-push" version="5.1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/nl.martijndwars/web-push/5.1.0/297dd4ed4beaff967ec338a96b3e4ebb6f77cb39/web-push-5.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
