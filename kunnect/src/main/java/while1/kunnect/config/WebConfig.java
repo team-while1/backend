@@ -19,13 +19,19 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns(
+                        // 개발 환경
+                        "http://localhost:5173",
                         "http://localhost:3000",
                         "http://localhost:3001",
-                        "http://localhost:5173",
                         "http://localhost:8080",
-                        "https://kunnect.co.kr"  // 실제 프론트엔드 도메인
+
+                        // 프로덕션 환경
+                        "http://kunnect.co.kr",
+                        "http://www.kunnect.co.kr",
+                        "https://kunnect.co.kr",
+                        "https://www.kunnect.co.kr"
                 )
-                .allowedMethods("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
