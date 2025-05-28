@@ -9,13 +9,16 @@ import while1.kunnect.repository.file.FileRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class FileService {
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+    private static final String UPLOAD_PRE = "/var/www";
+    private static final String UPLOAD_DIR = "/images/postfile";  // post 용 경로
+    private static final String FULL_UPLOAD_PATH = UPLOAD_PRE + UPLOAD_DIR;
 
     private final FileRepository fileRepository;
 
@@ -23,26 +26,31 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public FileEntity uploadFile(Long postId, MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
-        String filePath = Paths.get(uploadDir, fileName).toString();
+    public List<FileEntity> uploadFiles(Long postId, List<MultipartFile> files) throws IOException {
+        List<FileEntity> uploadedFiles = new ArrayList<>();
 
-        File directory = new File(uploadDir);
+        File directory = new File(FULL_UPLOAD_PATH);
         if (!directory.exists()) {
-            directory.mkdirs();  // 하위까지 생성
+            directory.mkdirs();
         }
 
-        File dest = new File(filePath);
-        file.transferTo(dest);
+        for (MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
+            String filePath = Paths.get(FULL_UPLOAD_PATH, fileName).toString();
 
-        FileEntity fileEntity = new FileEntity();
-        fileEntity.setPostId(postId);
-        fileEntity.setFileName(fileName);
-        fileEntity.setFilePath(filePath);
+            File dest = new File(filePath);
+            file.transferTo(dest);
 
-        return fileRepository.save(fileEntity);
+            FileEntity fileEntity = new FileEntity();
+            fileEntity.setPostId(postId);
+            fileEntity.setFileName(fileName);
+            fileEntity.setFilePath(UPLOAD_DIR + "/" + fileName); // DB에는 상대 경로 저장
+
+            uploadedFiles.add(fileRepository.save(fileEntity));
+        }
+
+        return uploadedFiles;
     }
-
 
     public Optional<FileEntity> getFile(Long fileId) {
         return fileRepository.findById(fileId);
