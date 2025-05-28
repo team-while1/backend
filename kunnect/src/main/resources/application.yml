@@ -23,3 +23,7 @@ jwt:
 file:
   upload-dir: C:/Users/user/Desktop/backend/kunnect/uploads
 
+vapid:
+  public-key: "BMxYc4VVWD5OGG8WuOipZNnHKLQQIZKPRy-KLjJ-9KJ7fQ3dCsJ_aBBtX7VHhNJPm8rg1VxlQKJtMQ5WPYzBzxQ"
+  private-key: "abc123def456ghi789jklmnopqrstuvwxyz"
+
