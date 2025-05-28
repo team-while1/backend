@@ -15,6 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/var/www/images/");
     }
 
+    /*
+    WebSecurityConfig가 우선순위가 높아서 WebConfig의 CORS 설정 무시됨
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -39,4 +41,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .maxAge(3600);
     }
+    */
 }
