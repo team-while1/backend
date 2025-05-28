@@ -1,7 +1,10 @@
 package while1.kunnect.domain.enumtype;
 
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import while1.kunnect.exception.CustomException;
+import while1.kunnect.exception.ErrorCode;
 
 @Getter
 @RequiredArgsConstructor
@@ -87,4 +90,11 @@ public enum Major {
     CREATIVE_CONVERGENCE("창의융합학부");
 
     private final String info;
+
+    public static Major fromKoreanName(String koreanName) {
+        return Arrays.stream(Major.values())
+                .filter(major -> major.info.equals(koreanName))
+                .findFirst()
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_MAJOR));
+    }
 }

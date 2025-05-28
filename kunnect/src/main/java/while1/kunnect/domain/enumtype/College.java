@@ -1,7 +1,10 @@
 package while1.kunnect.domain.enumtype;
 
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import while1.kunnect.exception.CustomException;
+import while1.kunnect.exception.ErrorCode;
 
 @Getter
 @RequiredArgsConstructor
@@ -18,4 +21,11 @@ public enum College {
     CREATIVE_CONVERGENCE("창의융합학부");
 
     private final String info;
+
+    public static College fromKoreanName(String koreanName) {
+        return Arrays.stream(College.values())
+                .filter(college -> college.info.equals(koreanName))
+                .findFirst()
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_COLLEGE));
+    }
 }

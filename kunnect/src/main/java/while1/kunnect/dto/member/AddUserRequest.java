@@ -25,8 +25,8 @@ public record AddUserRequest (
     String studentNum,
 
     @NotNull(message = "소속은 필수 입력값입니다.")
-    College college,
+    String college,
 
     @NotNull(message = "전공은 필수 입력값입니다.")
-    Major major
+    String major
 ) {}

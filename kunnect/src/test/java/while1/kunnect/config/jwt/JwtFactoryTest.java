@@ -32,8 +32,8 @@ class JwtFactoryTest {
         Member testMember = memberRepository.save(Member.builder()
                 .email("test@example.com")
                 .password("1233")
-                .major(Major.TEST1)
-                .college(College.TEST1)
+                .major(Major.MECHANICAL_ENGINEERING)
+                .college(College.CONVERGENCE_TECHNOLOGY)
                 .studentNum(1231L)
                 .name("test1")
                 .build());

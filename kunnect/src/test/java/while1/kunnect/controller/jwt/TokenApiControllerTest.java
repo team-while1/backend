@@ -55,8 +55,8 @@ class TokenApiControllerTest {
                 .email("test@test.com")
                 .name("test")
                 .password("test")
-                .major(Major.TEST1)
-                .college(College.TEST1)
+                .major(Major.MECHANICAL_ENGINEERING)
+                .college(College.CONVERGENCE_TECHNOLOGY)
                 .studentNum(123L)
                 .build());
         String refreshToken = JwtFactory.builder()
