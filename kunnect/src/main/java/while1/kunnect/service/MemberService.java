@@ -307,6 +307,7 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         deleteExistingImage(member.getProfileUrl());
         member.setProfileUrl(BASIC_PIC);
+        memberRepository.save(member);
         return member;
     }
 }
