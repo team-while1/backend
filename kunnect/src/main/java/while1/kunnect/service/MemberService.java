@@ -57,32 +57,34 @@ public class MemberService {
     public Member findMember(HttpServletRequest request, HttpServletResponse response) {
         // 1. Authentication 객체 확인
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        /*
         System.out.println("🔍 Authentication: " + auth);
         System.out.println("🔍 Authentication class: " + (auth != null ? auth.getClass().getName() : "null"));
         System.out.println("🔍 Is authenticated: " + (auth != null ? auth.isAuthenticated() : "false"));
         System.out.println("🔍 Principal: " + (auth != null ? auth.getPrincipal() : "null"));
         System.out.println("🔍 Principal class: " + (auth != null && auth.getPrincipal() != null ? auth.getPrincipal().getClass().getName() : "null"));
+        */
 
         // 2. CustomUserDetails에서 직접 Member 가져오기
         if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
             Member member = userDetails.getMember();
-            System.out.println("🔍 Member from CustomUserDetails: " + member.getEmail());
+        //    System.out.println("🔍 Member from CustomUserDetails: " + member.getEmail());
             return member;
         }
 
         // 3. 대안: getUserEmailFromAuthentication() 사용
         String userEmail = getUserEmailFromAuthentication();
-        System.out.println("🔍 Extracted email: '" + userEmail + "'");
+        // System.out.println("🔍 Extracted email: '" + userEmail + "'");
 
         if (userEmail == null || userEmail.trim().isEmpty()) {
             System.out.println("❌ Email is null or empty!");
             throw new CustomException(ErrorCode.INVALID_MAJOR);
         }
         // 4. DB에서 조회
-        System.out.println("🔍 Searching for email in DB: " + userEmail);
+        // System.out.println("🔍 Searching for email in DB: " + userEmail);
         Optional<Member> memberOpt = memberRepository.findByEmail(userEmail);
-        System.out.println("🔍 Member found: " + memberOpt.isPresent());
+        // System.out.println("🔍 Member found: " + memberOpt.isPresent());
 
         return memberOpt.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }
@@ -161,7 +163,8 @@ public class MemberService {
         Optional.ofNullable(request.college())
                 .ifPresent(newText -> {
                     try {
-                        College college = College.valueOf(newText);
+                        College college = College.fromKoreanName(newText);
+                        System.out.println(college);
                         member.setCollege(college);
                     } catch (IllegalArgumentException e) {
                         throw new CustomException(ErrorCode.INVALID_COLLEGE);
@@ -170,7 +173,8 @@ public class MemberService {
         Optional.ofNullable(request.major())
                 .ifPresent(newText -> {
                     try {
-                        Major major = Major.valueOf(newText);
+                        Major major = Major.fromKoreanName(newText);
+                        System.out.println(major);
                         member.setMajor(major);
                     } catch (IllegalArgumentException e) {
                         throw new CustomException(ErrorCode.INVALID_MAJOR);
