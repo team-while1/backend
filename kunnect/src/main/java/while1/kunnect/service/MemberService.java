@@ -186,40 +186,40 @@ public class MemberService {
     public String getUserEmailFromAuthentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        System.out.println("🔍 getUserEmailFromAuthentication 시작");
-        System.out.println("🔍 Authentication: " + auth);
+        // System.out.println("🔍 getUserEmailFromAuthentication 시작");
+        // System.out.println("🔍 Authentication: " + auth);
 
         if (auth == null || !auth.isAuthenticated()) {
-            System.out.println("❌ Authentication is null or not authenticated");
+            // System.out.println("❌ Authentication is null or not authenticated");
             return null;
         }
 
         Object principal = auth.getPrincipal();
-        System.out.println("🔍 Principal: " + principal);
-        System.out.println("🔍 Principal type: " + principal.getClass().getName());
+        // System.out.println("🔍 Principal: " + principal);
+        // System.out.println("🔍 Principal type: " + principal.getClass().getName());
 
         // CustomUserDetails인 경우
         if (principal instanceof CustomUserDetails) {
             CustomUserDetails userDetails = (CustomUserDetails) principal;
             String username = userDetails.getUsername(); // 이게 email
-            System.out.println("🔍 CustomUserDetails username (email): " + username);
+            // System.out.println("🔍 CustomUserDetails username (email): " + username);
             return username;
         }
 
         // 문자열인 경우 (혹시 다른 경우)
         if (principal instanceof String) {
-            System.out.println("🔍 String principal: " + principal);
+            // System.out.println("🔍 String principal: " + principal);
             return (String) principal;
         }
 
         // UserDetails 구현체인 경우
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
-            System.out.println("🔍 UserDetails username: " + username);
+            // System.out.println("🔍 UserDetails username: " + username);
             return username;
         }
 
-        System.out.println("❌ Unknown principal type: " + principal.getClass().getName());
+        // System.out.println("❌ Unknown principal type: " + principal.getClass().getName());
         return null;
     }
     /*
