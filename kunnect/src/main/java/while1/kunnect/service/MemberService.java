@@ -5,10 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -32,6 +29,7 @@ import while1.kunnect.dto.member.AddUserRequest;
 import while1.kunnect.exception.CustomException;
 import while1.kunnect.exception.ErrorCode;
 import while1.kunnect.repository.MemberRepository;
+import while1.kunnect.security.CustomUserDetails;
 
 @Service
 @Slf4j
@@ -48,11 +46,45 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }
 
+    /*
     public Member findMember(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = getUserEmailFromAuthentication();
         return memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+    }
+    */
+    public Member findMember(HttpServletRequest request, HttpServletResponse response) {
+        // 1. Authentication 객체 확인
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("🔍 Authentication: " + auth);
+        System.out.println("🔍 Authentication class: " + (auth != null ? auth.getClass().getName() : "null"));
+        System.out.println("🔍 Is authenticated: " + (auth != null ? auth.isAuthenticated() : "false"));
+        System.out.println("🔍 Principal: " + (auth != null ? auth.getPrincipal() : "null"));
+        System.out.println("🔍 Principal class: " + (auth != null && auth.getPrincipal() != null ? auth.getPrincipal().getClass().getName() : "null"));
+
+        // 2. CustomUserDetails에서 직접 Member 가져오기
+        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+            Member member = userDetails.getMember();
+            System.out.println("🔍 Member from CustomUserDetails: " + member.getEmail());
+            return member;
+        }
+
+        // 3. 대안: getUserEmailFromAuthentication() 사용
+        String userEmail = getUserEmailFromAuthentication();
+        System.out.println("🔍 Extracted email: '" + userEmail + "'");
+
+        if (userEmail == null || userEmail.trim().isEmpty()) {
+            System.out.println("❌ Email is null or empty!");
+            throw new CustomException(ErrorCode.INVALID_MAJOR);
+        }
+        // 4. DB에서 조회
+        System.out.println("🔍 Searching for email in DB: " + userEmail);
+        Optional<Member> memberOpt = memberRepository.findByEmail(userEmail);
+        System.out.println("🔍 Member found: " + memberOpt.isPresent());
+
+        return memberOpt.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }
 
     public Long save(AddUserRequest dto) {
@@ -149,6 +181,46 @@ public class MemberService {
 
     public String getUserEmailFromAuthentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println("🔍 getUserEmailFromAuthentication 시작");
+        System.out.println("🔍 Authentication: " + auth);
+
+        if (auth == null || !auth.isAuthenticated()) {
+            System.out.println("❌ Authentication is null or not authenticated");
+            return null;
+        }
+
+        Object principal = auth.getPrincipal();
+        System.out.println("🔍 Principal: " + principal);
+        System.out.println("🔍 Principal type: " + principal.getClass().getName());
+
+        // CustomUserDetails인 경우
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) principal;
+            String username = userDetails.getUsername(); // 이게 email
+            System.out.println("🔍 CustomUserDetails username (email): " + username);
+            return username;
+        }
+
+        // 문자열인 경우 (혹시 다른 경우)
+        if (principal instanceof String) {
+            System.out.println("🔍 String principal: " + principal);
+            return (String) principal;
+        }
+
+        // UserDetails 구현체인 경우
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            System.out.println("🔍 UserDetails username: " + username);
+            return username;
+        }
+
+        System.out.println("❌ Unknown principal type: " + principal.getClass().getName());
+        return null;
+    }
+    /*
+    public String getUserEmailFromAuthentication() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || auth.getPrincipal() == null) {
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -162,6 +234,7 @@ public class MemberService {
                     throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
                 });
     }
+    */
 
     public Member findEmail(String stringOfStudentNum) {
         Long studentNum = Long.valueOf(stringOfStudentNum);
