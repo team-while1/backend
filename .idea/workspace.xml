@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +165,7 @@
       <workItem from="1748319384191" duration="740000" />
       <workItem from="1748477484680" duration="44000" />
       <workItem from="1748477603068" duration="425000" />
-      <workItem from="1748482211043" duration="607000" />
+      <workItem from="1748482211043" duration="3365000" />
     </task>
     <servers />
   </component>
