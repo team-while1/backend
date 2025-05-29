@@ -259,6 +259,7 @@ public class MemberService {
         member.setPassword(bCryptPasswordEncoder.encode(request.password()));
     }
 
+
     public Member updateProfile(ProfileUpdateDto request) {
         if (request.image() == null) {
             throw new CustomException(ErrorCode.INVALID_INPUT);
@@ -270,6 +271,7 @@ public class MemberService {
             String savedPath = saveNewImage(request.image());
             deleteExistingImage(member.getProfileUrl());
             member.setProfileUrl(savedPath);
+            memberRepository.save(member);
         } catch (IOException e) {
             throw new CustomException(ErrorCode.ERROR_IMAGE_THING);
         }
@@ -291,6 +293,9 @@ public class MemberService {
 
     private void deleteExistingImage(String currentPhotoUrl) {
         try {
+            if (currentPhotoUrl.contains(BASIC_PIC)) {
+                return;
+            }
             Files.deleteIfExists(Paths.get(currentPhotoUrl));
         } catch (IOException e) {
             log.warn("기존 이미지 삭제 중 오류 발생: {}", e.getMessage());
