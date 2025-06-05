@@ -1,6 +1,5 @@
 package while1.kunnect.config;
 
-import java.util.Arrays;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
 import while1.kunnect.config.filter.TokenAuthenticationFilter;
 import while1.kunnect.service.MemberDetailService;
 import while1.kunnect.service.MemberService;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.Arrays;
 
 @Slf4j
 @Configuration
@@ -46,38 +40,38 @@ public class WebSecurityConfig {
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 비활성화 (JWT 인증 사용)
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/signup", "/api/login").permitAll()
                         .requestMatchers("/api/signup", "/api/login").permitAll()
                         .requestMatchers("/api/find/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS 요청 허용
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
-//                .cors(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable) // 👈 CORS 비활성화 (Nginx에서 처리)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
                             log.debug("인증되지 않은 사용자 요청: {}", request.getRequestURI());
                             response.setContentType("application/json; charset=UTF-8");
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 👈 401로 변경 (더 정확함)
                             response.getWriter().write("""
                                     {
-                                        "error": "Access Denied about %s(%s)",
-                                        "message": "로그인이 필요합니다."
+                                        "error": "Unauthorized",
+                                        "message": "로그인이 필요합니다.",
+                                        "path": "%s"
                                     }
-                                    """.formatted(request.getLocalName(), request.getRequestURL()));
+                                    """.formatted(request.getRequestURI()));
                         })
                 )
-        .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       BCryptPasswordEncoder bCryptPasswordEncoder, MemberDetailService memberDetailService, MemberService memberService)
-        throws Exception {
+                                                       BCryptPasswordEncoder bCryptPasswordEncoder,
+                                                       MemberDetailService memberDetailService,
+                                                       MemberService memberService) throws Exception {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(memberDetailService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
@@ -87,29 +81,5 @@ public class WebSecurityConfig {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedOriginPatterns(Arrays.asList(
-                "http://localhost:5173",
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "http://localhost:8080",
-                "http://kunnect.co.kr",
-                "http://www.kunnect.co.kr",
-                "https://kunnect.co.kr",
-                "https://www.kunnect.co.kr"
-        ));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh", "Content-Type", "X-Requested-With", "Accept", "Origin"));
-        configuration.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 }
