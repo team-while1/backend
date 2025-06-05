@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Pattern;
 
 public record UpdatePasswordRequest(
         @Email
-        @NotBlank(message = "이메일은 필수 입력값입니다.")
+//        @NotBlank(message = "이메일은 필수 입력값입니다.")
         String email,
-        @NotBlank(message = "별명은 필수 입력값입니다.")
+//        @NotBlank(message = "별명은 필수 입력값입니다.")
         String name,
         @JsonProperty("student_num")
         @NotBlank(message = "학번은 필수 입력값입니다.")
