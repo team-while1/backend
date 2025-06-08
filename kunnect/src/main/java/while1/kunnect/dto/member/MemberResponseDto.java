@@ -12,8 +12,8 @@ public record MemberResponseDto(
         String name,
         @JsonProperty("student_num")
         String studentNum,
-        College college,
-        Major major,
+        String college,
+        String major,
         @JsonProperty("profile_url")
         String profileUrl
 ) {
@@ -23,8 +23,8 @@ public record MemberResponseDto(
                 member.getEmail(),
                 member.getName(),
                 member.getStudentNum().toString(),
-                member.getCollege(),
-                member.getMajor(),
+                member.getCollege().getInfo(),
+                member.getMajor().getInfo(),
                 member.getProfileUrl()
         );
     }
