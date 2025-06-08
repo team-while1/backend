@@ -35,16 +35,20 @@ public class FileService {
         }
 
         for (MultipartFile file : files) {
-            String fileName = file.getOriginalFilename();
+            String fileName = Paths.get(file.getOriginalFilename()).getFileName().toString();  // 파일명만 추출
             String filePath = Paths.get(FULL_UPLOAD_PATH, fileName).toString();
 
             File dest = new File(filePath);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();  // 중간 경로까지 생성
+            }
+
             file.transferTo(dest);
 
             FileEntity fileEntity = new FileEntity();
             fileEntity.setPostId(postId);
             fileEntity.setFileName(fileName);
-            fileEntity.setFilePath(UPLOAD_DIR + "/" + fileName); // DB에는 상대 경로 저장
+            fileEntity.setFilePath(UPLOAD_DIR + "/" + fileName);
 
             uploadedFiles.add(fileRepository.save(fileEntity));
         }
