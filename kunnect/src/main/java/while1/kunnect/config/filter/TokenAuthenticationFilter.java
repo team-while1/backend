@@ -25,7 +25,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final List<String> PERMIT_ALL_PATHS = Arrays.asList(
             "/api/signup",
             "/api/login",
-            "/api/member",
+            //"/api/member",
             "/api/auth/find"
     );
 
@@ -37,11 +37,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
 
-        // permitAll 경로는 JWT 검증 건너뛰기
-        if (shouldSkipFilter(requestURI)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        // FIXME permitAll 경로는 JWT 검증 건너뛰기 -> 없어도 됨. securityFilterChain에서 확인함.
+        /* if (shouldSkipFilter(requestURI)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        */
 
         // 요청 헤더 Authorization 키 값 조회
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
@@ -62,6 +63,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
+    // FIXME securityFilterChain에서 확인함.
     /**
      * JWT 검증을 건너뛸 경로인지 확인
      */

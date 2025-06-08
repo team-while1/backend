@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< master
     <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/PushController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/PushMessageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/SubscriptionRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/PushNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" afterDir="false" />
     </list>
+=======
+    <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="" />
+>>>>>>> main
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -94,6 +91,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< master
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build kunnect.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.KunnectApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/Desktop/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Gradle.Build kunnect.executor&quot;: &quot;Run&quot;,
@@ -104,7 +122,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.KunnectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;now&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -112,14 +130,16 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> main
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\Desktop\backend\kunnect\src\main\resources" />
@@ -169,6 +189,14 @@
       <workItem from="1748317682864" duration="584000" />
       <workItem from="1748318286353" duration="1023000" />
       <workItem from="1748319384191" duration="740000" />
+<<<<<<< master
+      <workItem from="1749391305209" duration="32000" />
+=======
+      <workItem from="1748477484680" duration="44000" />
+      <workItem from="1748477603068" duration="425000" />
+      <workItem from="1748482211043" duration="3365000" />
+      <workItem from="1749389243489" duration="251000" />
+>>>>>>> main
     </task>
     <servers />
   </component>
