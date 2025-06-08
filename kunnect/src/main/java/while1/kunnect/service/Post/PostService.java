@@ -99,7 +99,6 @@ public class PostService {
                 .views(post.getViews())
                 .likes(post.getLikes())
                 .totalSlots(post.getTotalSlots())
-                .currentSlots(PostUtils.getParticipants(post))
                 .build();
     }
 
