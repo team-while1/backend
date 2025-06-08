@@ -5,13 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/PushController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/PushMessageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/SubscriptionRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/PushNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,32 +87,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build kunnect.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.KunnectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build kunnect.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.KunnectApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/Desktop/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\Desktop\backend\kunnect\src\main\resources" />
@@ -169,6 +162,7 @@
       <workItem from="1748317682864" duration="584000" />
       <workItem from="1748318286353" duration="1023000" />
       <workItem from="1748319384191" duration="740000" />
+      <workItem from="1749391305209" duration="32000" />
     </task>
     <servers />
   </component>
