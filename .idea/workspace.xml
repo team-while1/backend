@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/PushController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/PushMessageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/dto/Push/SubscriptionRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/PushNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/config/jwt/TokenProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/controller/Post/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kunnect/src/main/java/while1/kunnect/service/file/FileService.java" afterDir="false" />
-    </list>
+    <list default="true" id="63213a85-0f10-41d3-b12b-0a71b1a410b6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +95,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.KunnectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;now&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -112,6 +103,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -169,6 +161,10 @@
       <workItem from="1748317682864" duration="584000" />
       <workItem from="1748318286353" duration="1023000" />
       <workItem from="1748319384191" duration="740000" />
+      <workItem from="1748477484680" duration="44000" />
+      <workItem from="1748477603068" duration="425000" />
+      <workItem from="1748482211043" duration="3365000" />
+      <workItem from="1749389243489" duration="251000" />
     </task>
     <servers />
   </component>
