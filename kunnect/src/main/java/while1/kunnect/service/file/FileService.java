@@ -63,4 +63,9 @@ public class FileService {
     public boolean isValidFile(Long fileId) {
         return fileRepository.existsById(fileId);
     }
+
+    public List<FileEntity> getFilesByPostId(Long postId) {
+        return fileRepository.findByPostId(postId);
+    }
+
 }
