@@ -44,7 +44,8 @@ public class MemberController {
         if (!passwordEncoder.matches(request.password(), member.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
-        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(1));
+//        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(1));
+        String accessToken = tokenProvider.generateToken(member, Duration.ofDays(7));
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
         Map<String, String> tokens = memberService.saveAndGetTokens(member, accessToken, refreshToken);
         return ResponseEntity.ok().body(tokens);
