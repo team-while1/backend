@@ -18,11 +18,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("post_id")
     @Column(nullable = false)
-    private Long postId; // 모집글 ID (외래키 아님)
+    private Long postId;
 
+    @JsonProperty("member_id")
     @Column(name = "meber_id", nullable = false)
-    private Long memberId; // 작성자 ID (외래키 아님)
+    private Long memberId;
 
     @Column(nullable = false, length = 1000)
     private String content;
@@ -33,7 +35,7 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @JsonProperty("isAnonymous")
+    @JsonProperty("is_anonymous")
     @Column(nullable = false)
     private boolean isAnonymous;
 
