@@ -52,10 +52,24 @@ public class PostService {
 
         // 조회수 증가
         post.setViews(post.getViews() + 1);
-        postRepository.save(post); // 변경 사항 저장
+        postRepository.save(post);
 
-        return toDto(post);
+        return PostResponse.builder()
+                .id(post.getPostId())
+                .memberId(post.getWriter().getId())  // ✅ memberId 필드 추가된 것 반영
+                .title(post.getTitle())
+                .content(post.getContent())
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .startDate(post.getStartDate())
+                .endDate(post.getEndDate())
+                .categoryId(post.getCategoryId())
+                .views(post.getViews())
+                .likes(post.getLikes())
+                .totalSlots(post.getTotalSlots())
+                .build();
     }
+
 
 
     public Post update(Long id, CreatePostRequest dto, Member writer) {
@@ -90,7 +104,7 @@ public class PostService {
                 .id(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .writerName(post.getWriter().getName())
+                .memberId(post.getWriter().getId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .startDate(post.getStartDate())
