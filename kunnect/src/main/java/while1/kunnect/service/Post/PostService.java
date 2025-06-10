@@ -56,7 +56,7 @@ public class PostService {
 
         return PostResponse.builder()
                 .id(post.getPostId())
-                .memberId(post.getWriter().getId())  // ✅ memberId 필드 추가된 것 반영
+                .memberId(post.getWriter().getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
@@ -105,6 +105,7 @@ public class PostService {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .memberId(post.getWriter().getId())
+                .writerName(post.getWriter().getName())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .startDate(post.getStartDate())

@@ -13,6 +13,7 @@ public class PostResponse {
     private String title;
     private String content;
     private Long memberId;
+    private String writerName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDate startDate;
