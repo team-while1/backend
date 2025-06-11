@@ -34,6 +34,7 @@ public class PostService {
                 .totalSlots(dto.getTotalSlots())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
+                .appliedCount(0)
                 .build();
         return postRepository.save(post);
     }
@@ -137,14 +138,17 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("글 없음"));
 
-        // 신청 엔티티 생성 및 저장 (예시)
+        boolean alreadyApplied = applicationRepository.existsByPostAndMember(post, member);
+        if (alreadyApplied) {
+            throw new RuntimeException("이미 신청한 게시글입니다.");
+        }
+
         Application application = Application.builder()
                 .member(member)
                 .post(post)
                 .build();
         applicationRepository.save(application);
 
-        // 신청자 수 증가
         post.setAppliedCount(post.getAppliedCount() + 1);
         postRepository.save(post);
     }

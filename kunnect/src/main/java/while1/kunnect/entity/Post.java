@@ -69,5 +69,5 @@ public class Post {
     }
 
     @Column(name = "applied_count")
-    private int appliedCount;
+    private Integer appliedCount = 0;
 }
