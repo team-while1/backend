@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import while1.kunnect.domain.Member;
 import while1.kunnect.dto.post.CreatePostRequest;
 import while1.kunnect.dto.post.PostResponse;
-import while1.kunnect.entity.Like;
-import while1.kunnect.entity.Post;
-import while1.kunnect.entity.PostUtils;
+import while1.kunnect.entity.*;
 import while1.kunnect.repository.post.LikeRepository;
 import while1.kunnect.repository.post.PostRepository;
 
@@ -30,7 +28,7 @@ public class PostService {
                 .endDate(dto.getEndDate())
                 .categoryId(dto.getCategoryId())
              // .archived(dto.getArchived()) // 변수 변경 -> status
-                .status(dto.getStatus())
+                .status(PostStatus.OPEN)
                 .totalSlots(dto.getTotalSlots())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -71,7 +69,7 @@ public class PostService {
         post.setCategoryId(dto.getCategoryId());
         post.setTotalSlots(dto.getTotalSlots());
         //post.setArchived(dto.getArchived()); // 변수 변경 -> status
-        post.setStatus(dto.getStatus());
+        //post.setStatus(dto.getStatus());     // FIXME) 우선 주석 처리 함.
         post.setUpdatedAt(LocalDateTime.now());
 
         return postRepository.save(post);

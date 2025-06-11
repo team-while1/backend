@@ -15,6 +15,5 @@ public class CreatePostRequest {
     private int totalSlots;
     private String categoryId;
     //private Boolean archived; // 변수 변경 -> status
-    private PostStatus status;
 }
 
