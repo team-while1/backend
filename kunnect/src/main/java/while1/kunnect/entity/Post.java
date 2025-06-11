@@ -69,5 +69,6 @@ public class Post {
     }
 
     @Column(name = "applied_count")
+    @Builder.Default
     private Integer appliedCount = 0;
 }
