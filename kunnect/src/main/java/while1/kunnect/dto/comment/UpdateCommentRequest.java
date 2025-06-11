@@ -1,11 +1,11 @@
 package while1.kunnect.dto.comment;
 
 import lombok.Getter;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 public class UpdateCommentRequest {
-    private Long memberId;
-    @NotNull
+
+    @NotBlank
     private String content;
 }

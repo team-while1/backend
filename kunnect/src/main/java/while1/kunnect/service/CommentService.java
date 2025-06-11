@@ -37,6 +37,7 @@ public class CommentService {
         return commentRepository.findByMemberId(memberId);
     }
 
+    // 댓글 수정
     @Transactional
     public Comment update(Long id, Long memberId, String content) {
         Comment comment = commentRepository.findById(id)
@@ -51,6 +52,7 @@ public class CommentService {
         return comment;
     }
 
+    // 댓글 삭제
     public void delete(Long id, Long memberId) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
