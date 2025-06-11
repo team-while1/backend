@@ -7,6 +7,7 @@ import while1.kunnect.domain.Member;
 import while1.kunnect.dto.post.CreatePostRequest;
 import while1.kunnect.dto.post.PostResponse;
 import while1.kunnect.entity.*;
+import while1.kunnect.repository.ApplicationRepository;
 import while1.kunnect.repository.post.LikeRepository;
 import while1.kunnect.repository.post.PostRepository;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final LikeRepository likeRepository;
+    private final ApplicationRepository applicationRepository;
 
     public Post create(CreatePostRequest dto, Member writer) {
         Post post = Post.builder()
@@ -98,6 +100,7 @@ public class PostService {
                 .views(post.getViews())
                 .likes(post.getLikes())
                 .totalSlots(post.getTotalSlots())
+                .appliedCount(post.getAppliedCount())
                 .build();
     }
 
@@ -126,6 +129,23 @@ public class PostService {
             post.setLikes(post.getLikes() + 1);
         }
 
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void applyToPost(Long postId, Member member) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("글 없음"));
+
+        // 신청 엔티티 생성 및 저장 (예시)
+        Application application = Application.builder()
+                .member(member)
+                .post(post)
+                .build();
+        applicationRepository.save(application);
+
+        // 신청자 수 증가
+        post.setAppliedCount(post.getAppliedCount() + 1);
         postRepository.save(post);
     }
 }

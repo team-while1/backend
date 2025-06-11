@@ -22,4 +22,5 @@ public class PostResponse {
     private int views;
     private int likes;
     private int totalSlots;
+    private int appliedCount;
 }

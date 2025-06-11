@@ -67,4 +67,7 @@ public class Post {
         this.applications.add(application);
         if (application.getPost() != this) application.setPost(this);
     }
+
+    @Column(name = "applied_count")
+    private int appliedCount;
 }

@@ -24,4 +24,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findByPostAndStatus(Post post, ApplicationStatus status);
 
     int countByPostAndStatus(Post post, ApplicationStatus status);
+
+    boolean existsByMemberAndPost(Member member, Post post);
 }

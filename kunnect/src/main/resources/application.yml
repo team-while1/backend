@@ -15,6 +15,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
+  web:
+    resources:
+      static-locations: file:/var/www/
 
 jwt:
   issuer: ${JWT_ISS}
