@@ -36,6 +36,7 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "새 비밀번호와 확인 비밀번호가 일치하지 않습니다."),
     ERROR_IMAGE_THING(HttpStatus.BAD_REQUEST, "이미지 처리 중 오류가 발생했습니다."),
     INVALID_GOOGLE_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 구글 토큰입니다."),
+    INVALID_APPLICATION(HttpStatus.UNAUTHORIZED, "유효하지 않은 신청 상태 변경입니다."),
     APPLICATION_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "신청할 수 없는 게시글입니다."),
     NOT_POST_OWNER(HttpStatus.FORBIDDEN, "게시글 작성자만 이 작업을 수행할 수 있습니다."),
     NOT_APPLICATION_OWNER(HttpStatus.FORBIDDEN, "신청자만 이 작업을 수행할 수 있습니다.");

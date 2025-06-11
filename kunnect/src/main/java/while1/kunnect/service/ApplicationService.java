@@ -118,9 +118,15 @@ public class ApplicationService {
         if (!application.getPost().getWriter().getId().equals(memberId)) {
             throw new CustomException(ErrorCode.NOT_POST_OWNER);
         }
-        // 이미 처리된 신청 확인
-        if (application.getStatus() != ApplicationStatus.PENDING) {
-            throw new CustomException(ErrorCode.INVALID_REQUEST);
+        /*
+        이미 처리된 신청 확인
+        // 대기 -> 승인
+        // 대기 -> 거절
+        // 거절 -> 승인
+        // 승인 -> 거절
+         */
+        if (newStatus == ApplicationStatus.PENDING) {
+            throw new CustomException(ErrorCode.INVALID_APPLICATION);
         }
         // 상태 변경 - Application 엔티티의 메서드 활용
         if (newStatus == ApplicationStatus.APPROVED) {
