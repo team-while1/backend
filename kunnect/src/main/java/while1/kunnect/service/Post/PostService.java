@@ -152,6 +152,18 @@ public class PostService {
         post.setAppliedCount(post.getAppliedCount() + 1);
         postRepository.save(post);
     }
+
+    @Transactional
+    public void fixNullAppliedCounts() {
+        List<Post> posts = postRepository.findAll();
+        for (Post post : posts) {
+            if (post.getAppliedCount() == null) {
+                post.setAppliedCount(0);
+                postRepository.save(post);
+            }
+        }
+    }
+
 }
 
 
