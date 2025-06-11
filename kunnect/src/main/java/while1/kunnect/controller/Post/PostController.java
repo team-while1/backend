@@ -19,6 +19,8 @@ public class PostController {
     private final PostService postService;
     private final CustomUserDetailsService customUserDetailsService;
 
+
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreatePostRequest dto,
                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -55,6 +57,13 @@ public class PostController {
                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
         postService.toggleLike(postId, userDetails.getMember());
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{postId}/apply")
+    public ResponseEntity<String> applyToPost(@PathVariable Long postId,
+                                              @AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.applyToPost(postId, userDetails.getMember());
+        return ResponseEntity.ok("신청 완료");
     }
 
 }
