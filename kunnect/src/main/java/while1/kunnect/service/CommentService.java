@@ -18,23 +18,33 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BannedWordRepository bannedWordRepository;
 
+    // 댓글 저장
     public Comment save(Comment comment) {
         comment.setCreatedAt(LocalDateTime.now());
         comment.setUpdatedAt(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getCommentByPost(Long postId) {
-        return commentRepository.findByPostIdOrderByCreatedAtAsc(postId);
+    // 게시글 기준 댓글 목록 (작성자 포함, fetch join)
+    public List<CommentResponse> getCommentResponsesByPost(Long postId) {
+        return commentRepository.findWithMemberByPostId(postId)
+                .stream()
+                .map(CommentResponse::from)
+                .toList();
     }
 
+    // 작성자 기준 댓글 목록 (작성자 포함, fetch join)
+    public List<CommentResponse> getCommentResponsesByMember(Long memberId) {
+        return commentRepository.findWithMemberByMemberId(memberId)
+                .stream()
+                .map(CommentResponse::from)
+                .toList();
+    }
+
+    // 댓글 단건 조회 (작성자 포함, fetch join)
     public Comment getCommentById(Long id) {
         return commentRepository.findWithMemberById(id)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
-    }
-
-    public List<Comment> getCommentsByMember(Long memberId) {
-        return commentRepository.findByMemberId(memberId);
     }
 
     // 댓글 수정
@@ -62,6 +72,7 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
+    // 금지어 포함 여부
     public boolean containsBannedWords(String content) {
         List<String> bannedWords = bannedWordRepository.findAll()
                 .stream()
@@ -69,12 +80,5 @@ public class CommentService {
                 .toList();
 
         return bannedWords.stream().anyMatch(content::contains);
-    }
-
-    public List<CommentResponse> getCommentResponsesByPost(Long postId) {
-        return commentRepository.findWithMemberByPostId(postId)
-                .stream()
-                .map(CommentResponse::from)
-                .toList();
     }
 }

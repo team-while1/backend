@@ -65,10 +65,9 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentResponsesByPost(postId));
     }
 
-    // 특정 회원 작성 댓글 목록
     @GetMapping("/member/{memberId}")
-    public ResponseEntity<List<Comment>> getByMember(@PathVariable Long memberId) {
-        return ResponseEntity.ok(commentService.getCommentsByMember(memberId));
+    public ResponseEntity<List<CommentResponse>> getByMember(@PathVariable Long memberId) {
+        return ResponseEntity.ok(commentService.getCommentResponsesByMember(memberId));
     }
 
     // 댓글 필터링
