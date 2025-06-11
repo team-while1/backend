@@ -38,7 +38,9 @@ public class CommentResponse {
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .isAnonymous(comment.isAnonymous())
-                .writerName(comment.getMember().getName())
+                .writerName(
+                        comment.getMember() != null ? comment.getMember().getName() : "알 수 없음"
+                )
                 .build();
     }
 }
