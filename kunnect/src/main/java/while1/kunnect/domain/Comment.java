@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Comment {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
+    private Member member;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +27,7 @@ public class Comment {
     private Long postId;
 
     @JsonProperty("member_id")
-    @Column(name = "meber_id", nullable = false)
+    @Column(name = "member_id", nullable = false)
     private Long memberId;
 
     @Column(nullable = false, length = 1000)
