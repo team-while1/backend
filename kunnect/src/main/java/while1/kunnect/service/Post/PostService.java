@@ -47,15 +47,15 @@ public class PostService {
 
     @Transactional
     public PostResponse getOne(Long id) {
-        Post post = postRepository.findById(id)
+        Post post = postRepository.findByIdWithWriter(id)
                 .orElseThrow(() -> new RuntimeException("글 없음"));
 
-        // 조회수 증가
         post.setViews(post.getViews() + 1);
-        postRepository.save(post); // 변경 사항 저장
+        postRepository.save(post);
 
-        return toDto(post);
+        return toDto(post);  // toDto 안에서 writerName 잘 작동함
     }
+
 
 
     public Post update(Long id, CreatePostRequest dto, Member writer) {
@@ -90,6 +90,7 @@ public class PostService {
                 .id(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .memberId(post.getWriter().getId())
                 .writerName(post.getWriter().getName())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
@@ -99,7 +100,6 @@ public class PostService {
                 .views(post.getViews())
                 .likes(post.getLikes())
                 .totalSlots(post.getTotalSlots())
-                .currentSlots(PostUtils.getParticipants(post))
                 .build();
     }
 

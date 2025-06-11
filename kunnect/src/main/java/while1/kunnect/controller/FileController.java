@@ -51,4 +51,19 @@ public class FileController {
         boolean isValid = fileService.isValidFile(fileId);
         return ResponseEntity.ok(new FileValidateDto(isValid));
     }
+
+    @GetMapping("/by-post/{postId}")
+    public ResponseEntity<List<FileResponseDto>> getFilesByPostId(@PathVariable Long postId) {
+        List<FileEntity> files = fileService.getFilesByPostId(postId);
+        List<FileResponseDto> result = files.stream()
+                .map(file -> new FileResponseDto(
+                        file.getFileId(),
+                        file.getPostId(),
+                        file.getFileName(),
+                        file.getFilePath()
+                ))
+                .toList();
+        return ResponseEntity.ok(result);
+    }
+
 }

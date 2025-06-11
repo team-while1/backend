@@ -12,6 +12,7 @@ public class PostResponse {
     private Long id;
     private String title;
     private String content;
+    private Long memberId;
     private String writerName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -21,5 +22,4 @@ public class PostResponse {
     private int views;
     private int likes;
     private int totalSlots;
-    private int currentSlots;
 }
