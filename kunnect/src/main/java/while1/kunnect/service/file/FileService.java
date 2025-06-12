@@ -16,9 +16,17 @@ import java.util.Optional;
 @Service
 public class FileService {
 
-    private static final String UPLOAD_PRE = "/var/www";
     private static final String UPLOAD_DIR = "/images/postfile";  // post 용 경로
-    private static final String FULL_UPLOAD_PATH = UPLOAD_PRE + UPLOAD_DIR;
+    private static final String FULL_UPLOAD_PATH;
+
+    static {
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            FULL_UPLOAD_PATH = "C:\\Users\\user\\Desktop\\backend\\kunnect\\uploads"; // 로컬 Windows용
+        } else {
+            FULL_UPLOAD_PATH = "/var/www" + UPLOAD_DIR; // 서버용
+        }
+    }
+
 
     private final FileRepository fileRepository;
 
@@ -66,6 +74,19 @@ public class FileService {
 
     public List<FileEntity> getFilesByPostId(Long postId) {
         return fileRepository.findByPostId(postId);
+    }
+
+    public FileEntity updateFile(Long fileId, MultipartFile file) throws IOException {
+        FileEntity existing = fileRepository.findById(fileId)
+                .orElseThrow(() -> new RuntimeException("파일 없음"));
+
+        String fileName = Paths.get(file.getOriginalFilename()).getFileName().toString();
+        String filePath = Paths.get(FULL_UPLOAD_PATH, fileName).toString();
+
+        file.transferTo(new File(filePath));
+        existing.setFileName(fileName);
+        existing.setFilePath(UPLOAD_DIR + "/" + fileName);
+        return fileRepository.save(existing);
     }
 
 }

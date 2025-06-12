@@ -149,7 +149,8 @@ public class PostService {
                 .build();
         applicationRepository.save(application);
 
-        post.setAppliedCount(post.getAppliedCount() + 1);
+        Integer count = post.getAppliedCount() == null ? 0 : post.getAppliedCount();
+        post.setAppliedCount(count + 1);
         postRepository.save(post);
     }
 

@@ -66,4 +66,12 @@ public class FileController {
         return ResponseEntity.ok(result);
     }
 
+    @PatchMapping("/{fileId}")
+    public ResponseEntity<FileEntity> updateFile(
+            @PathVariable Long fileId,
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        FileEntity updated = fileService.updateFile(fileId, file);
+        return ResponseEntity.ok(updated);
+    }
 }

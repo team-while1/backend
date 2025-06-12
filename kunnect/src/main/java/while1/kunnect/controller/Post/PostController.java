@@ -65,5 +65,4 @@ public class PostController {
         postService.applyToPost(postId, userDetails.getMember());
         return ResponseEntity.ok("신청 완료");
     }
-
 }
