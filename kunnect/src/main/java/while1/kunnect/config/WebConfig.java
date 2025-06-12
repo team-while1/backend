@@ -14,12 +14,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/var/www/images/");
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5174")  // 프론트 주소 정확히!
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true);  // ← 이거 반드시 있어야 함
-    }
 }

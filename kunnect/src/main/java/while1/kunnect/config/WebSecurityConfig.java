@@ -44,9 +44,11 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/find/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS 요청 허용
+                        .requestMatchers(HttpMethod.PATCH, "/api/files/**").permitAll() // ← 이거 추가!
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable) // 👈 CORS 비활성화 (Nginx에서 처리)
                 .exceptionHandling(exception -> exception
